@@ -121,4 +121,6 @@ app.delete('/api/notes/:id', (req, res) => {
 });
 
 // Listen for incoming connections on the specified port
-app.listen(PORT, () => console.log(`App listening on port ${PORT}`));
+app.listen(PORT, () => 
+    console.log(`App listening on port ${PORT}`)
+);
