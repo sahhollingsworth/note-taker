@@ -2,7 +2,7 @@
 const express = require("express");
 // Import fs module for accessing file system
 const fs = require("fs"); 
-// Import quiqid module for note id generation
+// Import uniqid module for note id generation
 var uniqid = require("uniqid");
 // Import path module that provides utilities for working with file and directory paths
 const path = require("path");
@@ -40,13 +40,71 @@ app.get('/notes', (req, res) =>
 );
 
 // API routes
-// - Read `db.json` file and return all saved notes as JSON.
+// Get request for notes (from `db.json`, returned as JSON object)
 app.get('api/notes', (req, res) => {
     res.json(notes)
 });
 
 // - `POST /api/notes` to receive a new note to save on the request body, add it to the `db.json` file, and then return the new note to the client. 
 //     - give each note a unique id when it's saved
+
+// Post reqquest to add a note
+app.post('/api/notes', (req, res) => {
+    // Log that a request was received
+    console.info(`${req.method} request received to add a note`);
+    
+    // Destructure assignment for the items in req.body
+    const { title, text } = req.body;
+
+    // If both required properties are provided, add an id and save the note as a variable
+    if (title && text) {
+        const newNote = {
+            title,
+            text,
+            // Generate unique id
+            id: uniqid(),
+        };
+    
+    // Retreive all notes
+    fs.readFile("./db/db.json", "utf8", (err, data) => {
+        if (err) {
+            console.error(err);
+        }
+        else {
+            // Convert existining notes into JSON object
+            const existingNotes = JSON.parse(data);
+            // Add the new note to the existingNotes object
+            existingNotes.push(newNote);
+            
+            // Write updated Notes to the notes db.json file
+            // Stringify arguments: null = all properties of the object are included in the resulting JSON string. '\t' adds tab spacing for indentation
+            fs.writeFile("./db/db.json", JSON.stringify(existingNotes, null, '\t'), (writeError) =>
+                writeError
+                    // Write an error to the web console (and `stderr`)
+                    ? console.error(writeError)
+                    // Write an success message to the web console
+                    : console.info("Updated notes successfully!")
+            ); 
+        }
+    });
+
+    const response = {
+        status: "success",
+        body: newNote,
+    };
+
+    //for testing response value is correct
+    console.log (response);
+    // convert the response into a json object
+    res.json(response);
+    }
+    // if all note properties aren't present, return error message
+    else {
+        res.json("Error adding note");
+    }
+});
+
+
 
 
 // Delete notes
@@ -63,7 +121,7 @@ app.delete('/api/notes/:id', (req, res) => {
     console.log('Got a DELETE request at /notes')
     //return updated contents of db.json as a json object
     res.json(notes);
-})
+});
 
 // Listen for incoming connections on the specified port
 app.listen(PORT, () => console.log(`App listening on port ${PORT}`));
