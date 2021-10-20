@@ -1,9 +1,9 @@
 // Import express module for backend & routing
-const express = require('express');
+const express = require("express");
 // Import fs module for accessing file system
 const fs = require("fs"); 
 // Import quiqid module for note id generation
-var uniqid = require('uniqid');
+var uniqid = require("uniqid");
 // Import path module that provides utilities for working with file and directory paths
 const path = require("path");
 // Import json (acting database) storing all notes objects
@@ -20,23 +20,24 @@ app.use(express.urlencoded({ extended: true }));
 // Return the incoming request objects as JSON objects
 app.use(express.json());
 // Serve static files (CSS, JavaScript) in the public directory
-app.use(express.static('public'));
+app.use(express.static("public"));
 
 
-// // HTML routes
-// // - `GET *` should return the `index.html` file.
-// app.get('/', (req, res) =>
-//     res.sendFile(path.join(__dirname, '/public/index.html'))
-// );
-// // GET Route for homepage
-// app.get('/home', (req, res) =>
-//   res.sendFile(path.join(__dirname, '/public/index.html'))
-// );
+// HTML routes
+// GET '*' returns the `index.html` file
+app.get('*', (req, res) =>
+    res.sendFile(path.join(__dirname, "/public/index.html"))
+);
 
-// // - `GET /notes` should return the `notes.html` file.
-// app.get('/notes', (req, res) =>
-//   res.sendFile(path.join(__dirname, '/public/notes.html'))
-// );
+// GET route for the homepage
+app.get('/', (req, res) =>
+    res.sendFile(path.join(__dirname, "/public/index.html"))
+);
+
+// GET '/notes' return the 'notes.html' file
+app.get('/notes', (req, res) =>
+    res.sendFile(path.join(__dirname, "/public/notes.html"))
+);
 
 // API routes
 // - `GET /api/notes` to read the `db.json` file and return all saved notes as JSON.
