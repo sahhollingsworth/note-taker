@@ -53,3 +53,6 @@ Run this application by:
 Sarah Hollingsworth
 * [Github](https://github.com/sahhollingsworth)
 * [LinkedIn](https://www.linkedin.com/in/sarahhollingsworth/)
+
+## Acknowledgements
+* [The Difference of var vs let vs const in Javascript](https://medium.com/swlh/the-difference-of-var-vs-let-vs-const-in-javascript-abe37e214d66) by Megan Lo is a helpful walkthrough of use cases and difference between the 3 variable declarations.

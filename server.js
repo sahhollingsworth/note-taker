@@ -3,11 +3,11 @@ const express = require("express");
 // Import fs module for accessing file system
 const fs = require("fs"); 
 // Import uniqid module for note id generation
-var uniqid = require("uniqid");
+const uniqid = require("uniqid");
 // Import path module that provides utilities for working with file and directory paths
 const path = require("path");
 // Import json (acting database) storing all notes objects
-var notes = require("./db/db.json");
+var noteDB = require("./db/db.json");
 
 const app = express();
 
@@ -38,9 +38,9 @@ app.get('/notes', (req, res) =>
     res.sendFile(path.join(__dirname, "/public/notes.html"))
 );
 
-// Get request for notes (from `db.json`, returned as JSON object)
+// Get request for notes (from `db.json` file)
 app.get('api/notes', (req, res) => {
-    res.json(notes)
+    res.json(noteDB)
 }); 
 
 // Post request to add a note
@@ -61,13 +61,13 @@ app.post('/api/notes', (req, res) => {
         };
     
     // Retreive all notes
-    fs.readFile("./db/db.json", "utf8", (err, data) => {
+    fs.readFile("./db/db.json", "utf8", (err, noteDB) => {
         if (err) {
             console.error(err);
         }
         else {
             // Convert existining notes into JSON object
-            const existingNotes = JSON.parse(data);
+            const existingNotes = JSON.parse(noteDB);
             // Add the new note to the existingNotes object
             existingNotes.push(newNote);
             
@@ -91,7 +91,7 @@ app.post('/api/notes', (req, res) => {
 
     //for testing response value is correct
     console.log(response);
-    // convert the response into a json object
+    // convert the response into a json object, return to client
     res.json(response);
     }
     // if all note properties aren't present, return error message
@@ -103,20 +103,21 @@ app.post('/api/notes', (req, res) => {
 
 
 
-// Delete notes
-// Assumption: users can only delete 1 note at a time
-// Pseudo: 
-// Each note will have an id. 
-// In the UI there is a button on each note element for a user to delete that note.
-// When the user hits the button, the id is passed through
-// Filtering through all notes, the id is used to find the note object of interest
-// The note object is removed from db.json 
-// The UI needs to load the new db.json
+// Delete request to delet a note
 app.delete('/api/notes/:id', (req, res) => {
     // for testing
-    console.log('Got a DELETE request at /notes')
-    //return updated contents of db.json as a json object
-    res.json(notes);
+    console.log('Got a DELETE request at /notes');
+    // retrieve the id value
+    const id = req.params.id;
+
+    // Filter the existing notes object from db.json for only notes that don't have the same id as the note being deleted. 
+    var noteDB = noteDB.filter(note => note.id != id);
+
+    // Write over the existing db.json with the updated set of notes
+    fs.writeFile("./db/db.json", JSON.stringify(noteDB));
+    
+    //return updated notes to client as json object
+    res.json(noteDB);
 });
 
 // Listen for incoming connections on the specified port
