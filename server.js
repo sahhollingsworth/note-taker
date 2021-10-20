@@ -40,7 +40,11 @@ app.get('/notes', (req, res) =>
 );
 
 // API routes
-// - `GET /api/notes` to read the `db.json` file and return all saved notes as JSON.
+// - Read `db.json` file and return all saved notes as JSON.
+app.get('api/notes', (req, res) => {
+    res.json(notes)
+});
+
 // - `POST /api/notes` to receive a new note to save on the request body, add it to the `db.json` file, and then return the new note to the client. 
 //     - give each note a unique id when it's saved
 
