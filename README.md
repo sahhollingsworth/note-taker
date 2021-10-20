@@ -26,7 +26,7 @@ Required when when you first set up the project for local development or use OR 
 
 2. Start the server with `npm start`
 
-3. Open the website in your local browser http://localhost:3000
+3. Open the website in your local browser http://localhost:3001
 
 ## Usage
 Run this application by:
@@ -34,7 +34,7 @@ Run this application by:
 
 2. From the root folder of the repository, start the server with `npm start`
 
-3. Open the website in your local browser http://localhost:3000
+3. Open the website in your local browser http://localhost:3001
 
 ## Built with
 * [UniqueID](https://www.npmjs.com/package/uniqid) - Unique hexatridecimal ID generator, used to create ID's for each note upon creation.
