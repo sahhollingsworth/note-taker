@@ -48,11 +48,22 @@ app.get('api/notes', (req, res) => {
 // - `POST /api/notes` to receive a new note to save on the request body, add it to the `db.json` file, and then return the new note to the client. 
 //     - give each note a unique id when it's saved
 
-// Listen for incoming connections on the specified port
-app.listen(PORT, () => console.log(`App listening on port ${PORT}`));
-
 
 // Delete notes
-//app.delete('/user', function (req, res) {
-//     res.send('Got a DELETE request at /user')
-// })
+// Assumption: users can only delete 1 note at a time
+// Pseudo: 
+// Each note will have an id. 
+// In the UI there is a button on each note element for a user to delete that note.
+// When the user hits the button, the id is passed through
+// Filtering through all notes, the id is used to find the note object of interest
+// The note object is removed from db.json 
+// The UI needs to load the new db.json
+app.delete('/api/notes/:id', (req, res) => {
+    // for testing
+    console.log('Got a DELETE request at /notes')
+    //return updated contents of db.json as a json object
+    res.json(notes);
+})
+
+// Listen for incoming connections on the specified port
+app.listen(PORT, () => console.log(`App listening on port ${PORT}`));
