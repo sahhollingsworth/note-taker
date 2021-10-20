@@ -23,7 +23,6 @@ app.use(express.json());
 app.use(express.static("public"));
 
 
-// HTML routes
 // GET '*' returns the `index.html` file
 app.get('*', (req, res) =>
     res.sendFile(path.join(__dirname, "/public/index.html"))
@@ -39,21 +38,17 @@ app.get('/notes', (req, res) =>
     res.sendFile(path.join(__dirname, "/public/notes.html"))
 );
 
-// API routes
 // Get request for notes (from `db.json`, returned as JSON object)
 app.get('api/notes', (req, res) => {
     res.json(notes)
-});
+}); 
 
-// - `POST /api/notes` to receive a new note to save on the request body, add it to the `db.json` file, and then return the new note to the client. 
-//     - give each note a unique id when it's saved
-
-// Post reqquest to add a note
+// Post request to add a note
 app.post('/api/notes', (req, res) => {
     // Log that a request was received
     console.info(`${req.method} request received to add a note`);
     
-    // Destructure assignment for the items in req.body
+    // Destructure assignment for the newNote in request body
     const { title, text } = req.body;
 
     // If both required properties are provided, add an id and save the note as a variable
@@ -61,7 +56,7 @@ app.post('/api/notes', (req, res) => {
         const newNote = {
             title,
             text,
-            // Generate unique id
+            // Generate unique id for each note upon creation
             id: uniqid(),
         };
     
@@ -88,13 +83,14 @@ app.post('/api/notes', (req, res) => {
         }
     });
 
+    // Save new note on the response body
     const response = {
         status: "success",
         body: newNote,
     };
 
     //for testing response value is correct
-    console.log (response);
+    console.log(response);
     // convert the response into a json object
     res.json(response);
     }
