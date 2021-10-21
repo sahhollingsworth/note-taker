@@ -42,6 +42,8 @@ const saveNote = (note) =>
     body: JSON.stringify(note),
   });
 
+console.log(saveNote);
+
 const deleteNote = (id) => {
   fetch(`/api/notes/${id}`, {
     method: 'DELETE',
@@ -50,6 +52,8 @@ const deleteNote = (id) => {
     },
   })
 };
+
+console.log(deleteNote);
 
 const renderActiveNote = () => {
   hide(saveNoteBtn);

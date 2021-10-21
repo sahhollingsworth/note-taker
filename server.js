@@ -88,11 +88,11 @@ app.delete('/api/notes/:id', (req, res) => {
 
     // update notes db file with the updated list of notes
     fs.writeFile("./db/db.json", JSON.stringify(updatedNotes),  (deletionError) =>
-                deletionError
-                    // Write an error to the web console (and `stderr`)
-                    ? console.error(deletionError)
-                    // Write an success message to the web console
-                    : console.info("Removed note & updated Notes successfully!")
+        deletionError
+            // Write an error to the web console (and `stderr`)
+            ? console.error(deletionError)
+            // Write an success message to the web console
+            : console.info("Removed note & updated Notes successfully!")
     );
     // send updated json object to client
     res.json(updatedNotes);

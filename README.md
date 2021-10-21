@@ -37,7 +37,7 @@ Run this application by:
 3. Open the website in your local browser http://localhost:3001
 
 ## Built with
-* [UniqueID](https://www.npmjs.com/package/uniqid) - Unique hexatridecimal ID generator, used to create ID's for each note upon creation.
+* [UUID](https://www.npmjs.com/package/uuid) - Unique hexatridecimal ID generator, used to create ID's for each note upon creation.
 * [Expressjs](https://expressjs.com/) - Node web application framework used for server framework and API management.
 * [NPM](https://www.npmjs.com/) - Node package manager, used in conjunction with JS and Inquirer to support application logic and Command Line interface.
 * [Node](https://nodejs.org/en/) - Asynchronous event-driven JavaScript runtime environment that executes JavaScript code outside a web browser
