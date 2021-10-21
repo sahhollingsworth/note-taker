@@ -42,17 +42,13 @@ const saveNote = (note) =>
     body: JSON.stringify(note),
   });
 
-console.log(saveNote);
-
-const deleteNote = (id) =>
+const deleteNote = (id) => 
   fetch(`/api/notes/${id}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
     },
   });
-
-console.log(deleteNote);
 
 const renderActiveNote = () => {
   hide(saveNoteBtn);
@@ -80,8 +76,6 @@ const handleNoteSave = () => {
     renderActiveNote();
   });
 };
-
-
 
 // Delete the clicked note
 const handleNoteDelete = (e) => {

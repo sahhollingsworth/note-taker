@@ -19,10 +19,13 @@ Demo of Note Taker use
 ![Image imageplaceholder](./whatever.filetype)
 
 No Saved Notes UI
-![Image imageplaceholder](./whatever.filetype)
+![Image No Saved Notes UI](./public/assets/images/notetake_empty.png)
 
-Edit/Add Note UI
-![Image imageplaceholder](./whatever.filetype)
+Empty Note Editor UI
+![Image Empty Note Editor UI](./public/assets/images/notetaker_edit.png)
+
+Add Note UI
+![Image Add Note UI](./public/assets/images/notetaker_view.png)
 
 ## Installation
 Ensure you have Node.js installed locally to install packages to and from the public npm registry. [Node.js installation documentation.](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
