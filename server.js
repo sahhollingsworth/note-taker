@@ -74,42 +74,28 @@ app.post('/api/notes', (req, res) => {
 
 // Delete request to delete a note
 app.delete('/api/notes/:id', (req, res) => {
-    // for testing
+    // for testing - delete request running
     console.log('Got a DELETE request at /notes');
 
-    fs.readFile("./db/db.json", "utf8", (err, noteDB) => {
-        if (err) {
-            console.error(err)
-        }
-        else {
-            // convert data to array
-            let parsedNotes = JSON.parse(noteDB);
+    // retreive the id from the request body 
+    const id = req.params.id;
 
-            console.log("req.params.id");
-            console.log(req.params.id);
+    // Review all note id's in db.json and only include those that don't have the same id as the one being deleted
+    updatedNotes = noteDB.filter(note => note.id != id);
 
-            // retrieve the id value
-            const id = req.params.id;
+    // for testing - confirm removal of note
+    console.log(updatedNotes);
 
-            // Filter the existing notes object from db.json for only notes that don't have the same id as the note being deleted. 
-            parsedNotes = parsedNotes.filter(note => note.id != id);
-            console.log("What parsed notes looks like after note in question is removed");
-            console.log(parsedNotes);
-
-            // Write over the existing db.json with the updated set of notes
-            fs.writeFile("./db/db.json", JSON.stringify(parsedNotes),  (deletionError) =>
+    // update notes db file with the updated list of notes
+    fs.writeFile("./db/db.json", JSON.stringify(updatedNotes),  (deletionError) =>
                 deletionError
                     // Write an error to the web console (and `stderr`)
                     ? console.error(deletionError)
                     // Write an success message to the web console
                     : console.info("Removed note & updated Notes successfully!")
-            );
-            //return updated notes to client as json object
-            // console.log(parsedNotes);
-            // console.log(JSON.stringify(parsedNotes));
-            res.json(parsedNotes);
-        }
-    })
+    );
+    // send updated json object to client
+    res.json(updatedNotes);
 });
 
 // GET '*' returns the `index.html` file
