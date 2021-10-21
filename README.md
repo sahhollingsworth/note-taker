@@ -2,7 +2,8 @@
 The Note Taker application is a simple application for anyone to write and save notes in their web browser, allowing them to organize their thoughts and keep track of tasks they need to complete throughout the day to ensure they can delegate the majority of their time to the actual work they need to be doing.
 
 ## Summary
-Note Taker is a simple application for writing and saving notes. This application will use an Express.js backend, saving and retrieving note data from a single JSON file.
+Note Taker is a simple application for writing and saving notes. This Heroku-hosted application will use an Express.js backend, saving and retrieving note data from a single JSON file. 
+
 * App landing page  includes a link to a Notes page which takes the user to a page with all existing notes.
 * The Notes page has a left-hand column with the existing notes and a right-hand column with empty fields for the user to enter a new note title and text.
 * When the user enters a new note title and text, a Save icon appears in the navigation at the top of the page.
@@ -12,8 +13,15 @@ THEN that note appears in the right-hand column.
 * In the navigation bar at the top of the page there is a new note (write) icon available at all times. If the user selects the new note icon, the right-hand column Note Title and Note Text fields are returned blank for the user to enter a new note.
 
 ## Note Taker Application
-[Screen recording Demo of Note Taker application available here.](linktovideo)
+[Use the deployed Note Taker Application hosted on Heroku](https://sleepy-reef-64762.herokuapp.com/)
 
+Demo of Note Taker use
+![Image imageplaceholder](./whatever.filetype)
+
+No Saved Notes UI
+![Image imageplaceholder](./whatever.filetype)
+
+Edit/Add Note UI
 ![Image imageplaceholder](./whatever.filetype)
 
 ## Installation
@@ -29,14 +37,16 @@ Required when when you first set up the project for local development or use OR 
 3. Open the website in your local browser http://localhost:3001
 
 ## Usage
-Run this application by:
+Run this application locally by:
 1. Cloning the repository to your local machine.
 
 2. From the root folder of the repository, start the server with `npm start`
 
 3. Open the website in your local browser http://localhost:3001
 
-## Built with
+Application also available at on Heroku [here](https://sleepy-reef-64762.herokuapp.com/).
+
+## Techonologies used
 * [UUID](https://www.npmjs.com/package/uuid) - Unique hexatridecimal ID generator, used to create ID's for each note upon creation.
 * [Expressjs](https://expressjs.com/) - Node web application framework used for server framework and API management.
 * [NPM](https://www.npmjs.com/) - Node package manager, used in conjunction with JS and Inquirer to support application logic and Command Line interface.
@@ -48,6 +58,7 @@ Run this application by:
 * [HTML](https://developer.mozilla.org/en-US/docs/Web/HTML) - teampage.html output file generated from application
 * [Git](https://git-scm.com/doc) - Version control system to track changes to source code
 * [GitHub](https://docs.github.com/en) - Hosts the code repository
+* [Heroku](https://www.heroku.com/what) - Application is deployed to Heroku (AWS) 
 
 ## Authors
 Sarah Hollingsworth
