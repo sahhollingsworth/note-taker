@@ -15,8 +15,8 @@ THEN that note appears in the right-hand column.
 ## Note Taker Application
 [Use the deployed Note Taker Application hosted on Heroku](https://sleepy-reef-64762.herokuapp.com/)
 
-Demo of Note Taker use
-![Image imageplaceholder](./whatever.filetype)
+Demo of Note Taker - [Video demo available here](https://watch.screencastify.com/v/bk601i6yCkXefgUSUiBp)
+![Image GIF of Note Taker application in action](./public/assets/images/notetake_demo.gif)
 
 No Saved Notes UI
 ![Image No Saved Notes UI](./public/assets/images/notetake_empty.png)
