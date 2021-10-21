@@ -2,12 +2,15 @@
 const express = require("express");
 // Import fs module for accessing file system
 const fs = require("fs"); 
-// Import uniqid module for note id generation
-const uniqid = require("uniqid");
+// Import uuid module for note id generation
+const { v4: uuidv4 } = require('uuid');
 // Import path module that provides utilities for working with file and directory paths
 const path = require("path");
-// Import json (acting database) storing all notes objects
+// Import json (acting database) object containing all notes
 var noteDB = require("./db/db.json");
+
+console.log(noteDB);
+console.log(typeof noteDB);
 
 const app = express();
 
@@ -34,77 +37,42 @@ app.get('/notes', (req, res) =>
 
 // Get request for notes (from `db.json` file)
 app.get('/api/notes', (req, res) => {
-    fs.readFile("./db/db.json", "utf8", (err, noteDB) => {
+    fs.readFile("./db/db.json", (err, noteDB) => {
         if (err) {
             console.error(err)
         }
         else {
-            console.log(noteDB);
-            let parse= JSON.parse(noteDB);
-            console.log(parse);
-            res.json(parse)
+            let parsedNotes = JSON.parse(noteDB);
+            res.json(parsedNotes)
         }
     })
 }); 
 
 // Post request to add a note
 app.post('/api/notes', (req, res) => {
-    // Log that a request was received
-    console.info(`${req.method} request received to add a note`);
+    // Assign a random id value to the if key
+    req.body.id = uuidv4();
+    // Set the request body (title, text, id) as the new note to be added
+    const newNote = req.body;
+    // See the newnote contents
+    console.log(newNote);
     
-    // Destructure assignment for the newNote in request body
-    const { title, text } = req.body;
-
-    // If both required properties are provided, add an id and save the note as a variable
-    if (title && text) {
-        const newNote = {
-            title,
-            text,
-            // Generate unique id for each note upon creation
-            id: uniqid(),
-        };
+    //Add new note to notes database
+    noteDB.push(newNote);
     
-    // Retreive all notes
-    fs.readFile("./db/db.json", "utf8", (err, noteDB) => {
-        if (err) {
-            console.error(err);
-        }
-        else {
-            // Convert existining notes into JSON object
-            const existingNotes = JSON.parse(noteDB);
-            // Add the new note to the existingNotes object
-            existingNotes.push(newNote);
-            
-            // Write updated Notes to the notes db.json file
-            // Stringify arguments: null = all properties of the object are included in the resulting JSON string. '\t' adds tab spacing for indentation
-            fs.writeFile("./db/db.json", JSON.stringify(existingNotes, null, '\t'), (writeError) =>
-                writeError
-                    // Write an error to the web console (and `stderr`)
-                    ? console.error(writeError)
-                    // Write an success message to the web console
-                    : console.info("Updated notes successfully!")
-            ); 
-        }
-    });
-
-    // Save new note on the response body
-    const response = {
-        status: "success",
-        body: newNote,
-    };
-
-    //for testing response value is correct
-    console.log(response);
-    // convert the response into a json object, return to client
-    res.json(response);
-    }
-    // if all note properties aren't present, return error message
-    else {
-        res.json("Error adding note");
-    }
+    // Write updated Notes to the notes db.json file
+    fs.writeFile("./db/db.json", JSON.stringify(noteDB), (writeError) =>
+        writeError
+            // Write an error to the web console (and `stderr`)
+            ? console.error(writeError)
+            // Write an success message to the web console
+            : console.info("Added new note successfully!")
+    )
+    // send updated json object to client
+    res.json(noteDB);
 });
 
-// Delete request to delet a note
+// Delete request to delete a note
 app.delete('/api/notes/:id', (req, res) => {
     // for testing
     console.log('Got a DELETE request at /notes');
@@ -115,25 +83,33 @@ app.delete('/api/notes/:id', (req, res) => {
         }
         else {
             // convert data to array
-            let parse= JSON.parse(noteDB); /// fix variable
+            let parsedNotes = JSON.parse(noteDB);
+
+            console.log("req.params.id");
+            console.log(req.params.id);
 
             // retrieve the id value
             const id = req.params.id;
 
             // Filter the existing notes object from db.json for only notes that don't have the same id as the note being deleted. 
-            parse = parse.filter(note => note.id != id);
+            parsedNotes = parsedNotes.filter(note => note.id != id);
+            console.log("What parsed notes looks like after note in question is removed");
+            console.log(parsedNotes);
 
             // Write over the existing db.json with the updated set of notes
-            fs.writeFile("./db/db.json", JSON.stringify(parse));
-            
+            fs.writeFile("./db/db.json", JSON.stringify(parsedNotes),  (deletionError) =>
+                deletionError
+                    // Write an error to the web console (and `stderr`)
+                    ? console.error(deletionError)
+                    // Write an success message to the web console
+                    : console.info("Removed note & updated Notes successfully!")
+            );
             //return updated notes to client as json object
-            res.json(parse);
+            // console.log(parsedNotes);
+            // console.log(JSON.stringify(parsedNotes));
+            res.json(parsedNotes);
         }
     })
-
-
-
-    
 });
 
 // GET '*' returns the `index.html` file
